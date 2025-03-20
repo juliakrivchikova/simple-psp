@@ -14,7 +14,7 @@ open class SecureValue(
     private val maskedPartLength: Int = mask.second
     private val trailingPartLength: Int = mask.third
 
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     constructor(value: String) : this(value, Triple(0, value.length, 0))
 
     override fun toString(): String {
@@ -63,7 +63,8 @@ open class SecureValue(
     }
 }
 
-class CardNumber(value: String) : SecureValue(value, getCardNumberMask(value)) {
+class CardNumber @JsonCreator(mode = JsonCreator.Mode.DELEGATING) constructor(value: String) :
+    SecureValue(value, getCardNumberMask(value)) {
 
     override fun toString(): String {
         return if (value.length >= MIN_CHARS_FOR_MASKING) {

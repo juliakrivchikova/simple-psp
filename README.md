@@ -1,10 +1,10 @@
-# Payment Service
+# Simple PSP System
 
 ## Overview
 
 This project implements a simple **Payment Service Provider (PSP)** system that handles payment requests, routes them to
 different acquirers based on BIN card rules, and processes transactions accordingly. It is built using **Kotlin**, *
-*Spring Boot**, and **Spring WebFlux** for non-blocking processing with Kotlin Coroutines.
+*Spring Boot**, and **Spring WebFlux** for non-blocking processing with **Kotlin Coroutines**.
 
 ## Features
 
@@ -25,7 +25,10 @@ different acquirers based on BIN card rules, and processes transactions accordin
   ```json
   {
     "cardNumber": "4242424242424242",
-    "expiryDate": "12/26",
+    "expiryDate": {
+      "month": 12,
+      "year": 2029
+  },
     "cvv": "123",
     "amount": {
       "value": 100.50,
@@ -70,7 +73,7 @@ different acquirers based on BIN card rules, and processes transactions accordin
    ```
 4. **Test the API**
    ```sh
-   curl -X POST http://localhost:8080/api/v1/payments -H "Content-Type: application/json" -d '{ "cardNumber": "4111111111111111", "expiryDate": "12/26", "cvv": "123", "amount": { "value": 100.50, "currency": "USD" }, "merchantId": "merchant123" }'
+   curl -X POST http://localhost:8080/api/v1/payments -H "Content-Type: application/json" -d '{ "cardNumber": "4111111111111111", "expiryDate": { "year": 2029, "month": "12" }, "cvv": "123", "amount": { "value": 100.50, "currency": "USD" }, "merchantId": "merchant123" }'
    ```
 
 ## Design Choices
