@@ -40,13 +40,12 @@ different acquirers based on BIN card rules, and processes transactions accordin
 - **Response:**
   ```json
   {
-  "error": null,
-  "result": {
-    "id": "4854c47b-7cb3-41ae-aa31-86a2fca25fa3",
-    "status": "APPROVED"
+    "error": null,
+    "result": {
+      "id": "4854c47b-7cb3-41ae-aa31-86a2fca25fa3",
+      "status": "APPROVED"
+    }
   }
-
-}
   ```
 
 ## Setup and Running the Service
