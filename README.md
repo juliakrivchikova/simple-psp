@@ -108,6 +108,14 @@ different acquirers based on BIN card rules, and processes transactions accordin
 - Situations when acquirer system is failed to be resolved or interaction with an acquirer is failed are assumed to be
   out of scope
 
+## Further Improvements
+
+- Add support for snowflake ID generation
+- Add support for card number encryption with AES algorithm and hashing with HmacSHA256
+- Aspect based logging
+- Real database together with handling its availability issues
+- ...
+
 ## Error Handling
 
 - **400 Bad Request:** Invalid payment details.
