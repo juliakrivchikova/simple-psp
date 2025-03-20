@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+   <!-- Console appender definition -->
+   <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+      <encoder>
+         <!-- Define the log pattern including date, thread, level, logger, and message -->
+         <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg [%X{id}]%n</pattern>
+      </encoder>
+   </appender>
+
+   <!-- Asynchronous appender wrapping the console appender -->
+   <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+      <!-- Reference the console appender -->
+      <appender-ref ref="CONSOLE"/>
+      <!-- Configure the internal queue size -->
+      <queueSize>512</queueSize>
+      <!-- Set discarding threshold (0 means no log message will be discarded unless the queue is full) -->
+      <discardingThreshold>0</discardingThreshold>
+      <!-- Optional: set a timeout for callers trying to add to the queue -->
+      <!-- <timeout>500</timeout> -->
+   </appender>
+
+   <!-- Root logger configuration -->
+   <root level="INFO">
+      <!-- All logs will be processed asynchronously via the ASYNC appender -->
+      <appender-ref ref="ASYNC"/>
+   </root>
+</configuration>

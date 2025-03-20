@@ -30,6 +30,7 @@
 
    <properties>
       <kotlin.version>1.9.25</kotlin.version>
+      <logback.version>1.5.18</logback.version>
    </properties>
 
    <dependencies>
@@ -60,6 +61,23 @@
       <dependency>
          <groupId>org.jetbrains.kotlinx</groupId>
          <artifactId>kotlinx-coroutines-reactor</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.jetbrains.kotlinx</groupId>
+         <artifactId>kotlinx-coroutines-slf4j</artifactId>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+      <dependency>
+         <groupId>ch.qos.logback</groupId>
+         <artifactId>logback-classic</artifactId>
+         <version>${logback.version}</version>
+         <scope>compile</scope>
+      </dependency>
+      <dependency>
+         <groupId>ch.qos.logback</groupId>
+         <artifactId>logback-core</artifactId>
+         <version>${logback.version}</version>
+         <scope>compile</scope>
       </dependency>
       <dependency>
          <groupId>org.springframework.boot</groupId>
