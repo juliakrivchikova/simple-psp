@@ -29,13 +29,13 @@ class TransactionProcessorImpl(
     }
 
     private suspend fun doProcess(transaction: Transaction): ProcessTransactionResponse {
-        logger.debug("Transaction processing started")
+        logger.info("Transaction processing started")
         val acquirerClient = acquirerRouter.route(transaction)
         val sendTransactionResponse = acquirerClient.sendTransaction(transaction)
         val resultTransaction = transactionService.update(transaction, sendTransactionResponse)
 
         val processingResult = ProcessTransactionRs(resultTransaction, sendTransactionResponse)
-        logger.debug("Transaction processing finished, status = {}", processingResult.status)
+        logger.info("Transaction processing finished, status = {}", processingResult.status)
         return processingResult
     }
 
