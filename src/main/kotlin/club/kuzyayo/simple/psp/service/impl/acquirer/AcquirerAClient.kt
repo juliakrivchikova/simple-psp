@@ -25,7 +25,7 @@ class AcquirerAClient : AcquirerClient {
             logger.debug("Card number last digit is even, transaction is approved")
             SUCCESS
         } else {
-            logger.debug("Card number last digit is add, transaction is denied")
+            logger.debug("Card number last digit is odd, transaction is denied")
             TRANSACTION_REJECTED
         }
 
