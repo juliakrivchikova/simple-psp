@@ -36,7 +36,7 @@ class PaymentController(
         if (!validationResponse.isSuccessful()) {
             logger.debug(
                 "Payment request with card number {} and amount {} is not valid: {}",
-                requestEntity.body?.cardNumber, requestEntity.body?.amount?.value, validationResponse.message
+                paymentRequest.cardNumber, paymentRequest.amount.value, validationResponse.message
             )
             return ResponseEntity(
                 ProcessPaymentResponse(error = validationResponse),
@@ -61,13 +61,13 @@ class PaymentController(
 
             logger.debug(
                 "Payment request processing finished for card number {} and amount {}, transaction id is {}, status is {}",
-                requestEntity.body?.cardNumber, requestEntity.body?.amount?.value, processingResult.id, processingResult.status
+                paymentRequest.cardNumber, paymentRequest.amount.value, processingResult.id, processingResult.status
             )
             return ResponseEntity(responseBody, HttpStatus.OK)
         } catch (e: Exception) {
             logger.error(
-                "Payment request processing failed for card number ${requestEntity.body?.cardNumber} " +
-                        "and amount ${requestEntity.body?.amount}", e
+                "Payment request processing failed for card number ${paymentRequest.cardNumber} " +
+                        "and amount ${paymentRequest.amount}", e
             )
             return ResponseEntity(
                 ProcessPaymentResponse(error = ResponseCodes.SYSTEM_ERROR),
