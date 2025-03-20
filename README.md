@@ -40,12 +40,13 @@ different acquirers based on BIN card rules, and processes transactions accordin
 - **Response:**
   ```json
   {
-    "error": null,
-    "result": {
-      "id": "abc123",
-      "status": "APPROVED"
-    }
+  "error": null,
+  "result": {
+    "id": "4854c47b-7cb3-41ae-aa31-86a2fca25fa3",
+    "status": "APPROVED"
   }
+
+}
   ```
 
 ## Setup and Running the Service
@@ -72,6 +73,13 @@ different acquirers based on BIN card rules, and processes transactions accordin
    java -jar target/simple-psp-0.0.1-SNAPSHOT.jar
    ```
 4. **Test the API**
+
+   Request for Approved Transaction:
+   ```sh
+   curl -X POST http://localhost:8080/api/v1/payments -H "Content-Type: application/json" -d '{ "cardNumber": "4242424242424242", "expiryDate": { "year": 2029, "month": "12" }, "cvv": "123", "amount": { "value": 100.50, "currency": "USD" }, "merchantId": "merchant123" }'
+   ```
+
+5. Request for Denied Transaction:
    ```sh
    curl -X POST http://localhost:8080/api/v1/payments -H "Content-Type: application/json" -d '{ "cardNumber": "4111111111111111", "expiryDate": { "year": 2029, "month": "12" }, "cvv": "123", "amount": { "value": 100.50, "currency": "USD" }, "merchantId": "merchant123" }'
    ```
