@@ -3,8 +3,7 @@
 ## Overview
 
 This project implements a simple **Payment Service Provider (PSP)** system that handles payment requests, routes them to
-different acquirers based on BIN card rules, and processes transactions accordingly. It is built using **Kotlin**, *
-*Spring Boot**, and **Spring WebFlux** for non-blocking processing with **Kotlin Coroutines**.
+different acquirers based on BIN card rules, and processes transactions accordingly. It is built using **Kotlin**, **Spring Boot**, and **Spring WebFlux** for non-blocking processing with **Kotlin Coroutines**.
 
 ## Features
 
