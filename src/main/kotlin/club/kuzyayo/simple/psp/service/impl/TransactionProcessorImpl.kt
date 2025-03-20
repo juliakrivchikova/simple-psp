@@ -7,6 +7,7 @@ import club.kuzyayo.simple.psp.service.TransactionService
 import club.kuzyayo.simple.psp.vo.*
 import kotlinx.coroutines.slf4j.MDCContext
 import kotlinx.coroutines.withContext
+import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.stereotype.Service
 
@@ -15,6 +16,8 @@ class TransactionProcessorImpl(
     private val transactionService: TransactionService,
     private val acquirerRouter: AcquirerRouter,
 ) : TransactionProcessor {
+
+    private val logger = LoggerFactory.getLogger(TransactionProcessorImpl::class.java)
 
     override suspend fun process(transactionRequest: ProcessTransactionRequest): ProcessTransactionResponse {
         val transaction = transactionService.create(transactionRequest)
@@ -26,11 +29,14 @@ class TransactionProcessorImpl(
     }
 
     private suspend fun doProcess(transaction: Transaction): ProcessTransactionResponse {
+        logger.debug("Transaction processing started")
         val acquirerClient = acquirerRouter.route(transaction)
         val sendTransactionResponse = acquirerClient.sendTransaction(transaction)
         val resultTransaction = transactionService.update(transaction, sendTransactionResponse)
 
-        return ProcessTransactionRs(resultTransaction, sendTransactionResponse)
+        val processingResult = ProcessTransactionRs(resultTransaction, sendTransactionResponse)
+        logger.debug("Transaction processing finished, status = {}", processingResult.status)
+        return processingResult
     }
 
     private class ProcessTransactionRs(
