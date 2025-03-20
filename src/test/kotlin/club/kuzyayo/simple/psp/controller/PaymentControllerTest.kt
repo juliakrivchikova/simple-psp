@@ -1,7 +1,6 @@
 package club.kuzyayo.simple.psp.controller
 
 import club.kuzyayo.simple.psp.ResponseCodes
-import club.kuzyayo.simple.psp.ResponseCodes.INVALID_CARD_NUMBER
 import club.kuzyayo.simple.psp.domain.TransactionStatus
 import club.kuzyayo.simple.psp.vo.api.ProcessPaymentResponse
 import kotlinx.coroutines.runBlocking
@@ -84,7 +83,7 @@ class PaymentControllerTest {
         val request = paymentRequest("invalidCardNumber")
 
         //when
-        val responseEntity: ResponseEntity<ProcessPaymentResponse> = runBlocking {
+        val responseEntity: ResponseEntity<String> = runBlocking {
             client.exchange(
                 URI("/api/v1/payments"),
                 HttpMethod.POST,
@@ -93,14 +92,22 @@ class PaymentControllerTest {
                     HttpHeaders().apply {
                         contentType = MediaType.APPLICATION_JSON
                     }),
-                ProcessPaymentResponse::class.java
+                String::class.java
             )
         }
 
         //then
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.statusCode)
-        assertNotNull(responseEntity.body)
-        assertEquals(INVALID_CARD_NUMBER, responseEntity.body!!.error)
+        assertEquals(
+            "{" +
+                    "\"error\":{" +
+                    "\"code\":\"01\"," +
+                    "\"type\":\"FAILURE\"," +
+                    "\"message\":\"Invalid Card number\"" +
+                    "}," +
+                    "\"result\":null" +
+                    "}", responseEntity.body
+        )
     }
 
     private fun paymentRequest(cardNumber: String) = "{\n" +
